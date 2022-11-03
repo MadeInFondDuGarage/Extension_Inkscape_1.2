@@ -1,0 +1,45 @@
+<?xml version="1.2_10" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>Point sellier</_name>
+    <id>math.fonddugarage.pointsellier.couture</id>
+    <param name="tab" type="notebook">
+        <page name="Réglages" _gui-text="Réglage">
+            <param name="diamlong" type="string" _gui-text="Diametre-Longueur du point:" >1.0mm</param>
+            <param name="typePoint" type="optiongroup" appearance="combo" _gui-text="Type de points">
+                <option value="LigneH">Ligne dans l'axe</option>
+                <option value="LigneV">Ligne perpendiculaire</option>
+                <option value="Cercle">Cercle</option>
+                <option value="LigneG45">Ligne a 45° vers la droite</option>
+                <option value="LigneD45">Ligne a 45° vers la gauche</option> 
+            </param>
+            <param name="space" type="string" _gui-text="Espace entre les points:" >3.0mm</param>
+            <param name="autoSpace" type="boolean" _gui-text="Calcul Auto de l espace">false</param>
+            <param name="toffset" type="string" _gui-text="Décallage du 1er du point:" >0.1mm</param>
+            <param name="autoOffset" type="boolean" _gui-text="Calcul Auto du decallage">false</param>
+            <param name="nrepeat" type="int" _gui-text="Nombre de Points:" min="1" max="1000">0.0</param>
+            <param name="autoRepeat" type="boolean" _gui-text="Calcul Auto du nombre de points">false</param>
+        </page>
+        <page name="Options" _gui-text="Options">
+            <param name="textInfos" type="boolean" _gui-text="Texte de la couture sur le chemin">false</param>  
+            <param name="autoMask" type="boolean" _gui-text="Masque le chemin initial">false</param>
+            <param name="autoMark" type="boolean" _gui-text="Creation de marque en couleurs suivant un rythme">false</param>
+            <param name="typeMark" type="optiongroup" appearance="combo" _gui-text="Type de marquage">
+                <option value="markX">Tous les X points</option>
+                <option value="markFraction">Par Fraction</option>
+            </param>
+            <param name="nrepeat2" type="int" _gui-text="Valeurs de répétition:" min="1" max="100">2</param>
+        </page>
+        <page name="Help" _gui-text="Help">
+            <_param name="title" type="description">Cette extension permet de tracer le long d'un chemin des points de coutures avec différentes options qui pemettent de facilité la creation de patron sur Inkscape. elle peut être utiliser avec les gabarit et le tracage laser qui prend en compte les couleurs utiliser ici.</_param>
+        </page>
+    </param>
+    <effect>
+    <object-type>path</object-type>
+        <effects-menu>
+            <submenu _name="Creation patron cuir"/>
+        </effects-menu>
+    </effect>
+    <script>
+        <command location="inx" interpreter="python">ps_couture.py</command>
+    </script>
+</inkscape-extension>
