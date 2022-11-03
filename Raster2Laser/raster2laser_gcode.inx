@@ -1,0 +1,89 @@
+<?xml version="1.2_10" encoding="UTF-8"?>
+
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+
+	<name>Generateur Gcode Laser mode Raster</name>
+
+	<id>math.Lmath.fonddugarage.cnc.raster</id>
+
+
+	<param name="Title" type="description">Raster 2 Laser GCode generator</param>
+	<param name="Description" type="description">update to 1.2 by MadeInFondDuGarage</param>
+
+	<param name="directory" type="string"  gui-text="Export directory"></param>
+	<param name="filename" type="string"  gui-text="File Name"></param>
+	<param name="add-numeric-suffix-to-filename" type="boolean" gui-text="Add numeric suffix to filename">true</param>
+		
+	<param name="bg_color" type="enum" gui-text="Replace transparency with">
+		<_item value="#ffffff">White</_item>
+		<_item value="#000000">Black</_item>
+	</param>
+	
+	<param name="resolution" type="enum" gui-text="Resolution (Taille du faisceau laser)">
+		<_item value="1">1 mm</_item>
+		<_item value="2">0.5 mm</_item>
+		<_item value="5">0.2 mm</_item>
+		<_item value="10">0.1 mm</_item>
+	</param>
+		
+	<!-- Come convertire in scala di grigi -->
+	<param name="grayscale_type" type="enum" gui-text="Color to Grayscale conversion">
+		<_item value="1">0.21R + 0.71G + 0.07B</_item>
+		<_item value="2">(R+G+B)/3</_item>
+		<_item value="3">R</_item>
+		<_item value="4">G</_item>inkex.errormsg(matrice_BN)
+		<_item value="5">B</_item>
+		<_item value="6">Max Color</_item>
+		<_item value="7">Min Color</_item>
+	</param>
+
+	<param name="conversion_type" type="enum" gui-text="B/W conversion algorithm ">
+		<_item value="1">B/W fixed threshold</_item>
+		<_item value="2">B/W random threshold</_item>
+		<_item value="3">Grayscale</_item>
+	</param>
+	<_param name="infos" type="description" xml:space="preserve"> 
+    0 correspond au noir et 255 au blanc.
+    </_param>
+	<param name="BW_threshold" type="int" min="1" max="254" gui-text="B/W threshold">128</param>
+	
+	<param name="grayscale_resolution" type="enum" gui-text="Grayscale resolution ">
+		<_item value="1">256</_item>
+		<_item value="2">128</_item>  <!-- 256/2 -->
+		<_item value="4">64</_item>  <!-- 256/4 -->
+		<_item value="8">32</_item>  <!-- 256/8 -->
+		<_item value="16">16</_item>  <!-- 256/16 -->
+		<_item value="32">8</_item>  <!-- 256/32 -->
+	</param>	
+
+	<param name="speed_ON" type="int" min="1" max="5000" gui-text="Engraving speed">200</param>
+	
+	<param name="flip_y" type="boolean" gui-text="Flip Y">false</param>
+
+	<param name="homing" type="enum" gui-text="Homing ?">
+		<_item value="1">G28 (Standard)</_item>
+		<_item value="2">$H (GRBL)</_item>
+		<_item value="3">No Homing</_item>
+	</param>
+	<param name="Power_ON" type="int" min="1" max="12000" gui-text="Engraving power">3000</param>
+	<param name="laseron" type="string"  gui-text="Laser ON Command">M4</param>
+	<param name="laseroff" type="string"  gui-text="Laser OFF Command">M3</param>
+    <param name="laserpause" type="string"  gui-text="Pause Command">G4 P0</param>
+	
+	<param name="preview_only" type="boolean" gui-text="Preview only">false</param>
+	<param name="p_only" type="description">If "Preview only" is true the gcode file will not be generated.</param>
+
+	<effect needs-live-preview="false"> 
+        <object-type>all</object-type>
+        <effects-menu>
+            <submenu name="Generateur Gcode Laser"/>
+        </effects-menu>
+    </effect>
+    
+	<!-- Script python da eseguire -->
+	<script>
+    	<command location="inx" interpreter="python">raster2laser_gcode.py</command>
+    </script>
+</inkscape-extension>
+
+
