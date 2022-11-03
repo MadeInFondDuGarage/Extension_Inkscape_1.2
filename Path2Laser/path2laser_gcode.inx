@@ -1,0 +1,79 @@
+<?xml version="1.2_10" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>Generateur Gcode pour laser  a partir des chemins</_name>
+    <id>math.fonddugarage.cnc.path2laser</id>
+    <param name="tab" type="notebook">
+        <page name="Gravure" _gui-text="Gravure"> 
+            <_param name="grav_infos" type="description" xml:space="preserve"> 
+            Cette onglet regroupe les paramètres propre a la gravure. seul les chemin visible et dans la calque "Gravure" seront utiliser pour le gcode lier a la gravure.
+            </_param>
+            <param name="grav-travel-speed" type="int" min="0" max="10000" _gui-text="Vitesse rapide pour la gravure (mm/min or in/min):">3000</param>
+            	<param name="grav-laser-speed" type="int" min="0" max="10000" _gui-text="Vitesse du Laser pour la gravure (mm/min or in/min):">2000</param>
+       	    	<param name="grav-laser-power" type="int" min="0" max="20000" _gui-text="Puissance du laser S# (0-255(Marlin) ou 0-10000(GRBL)):">3000</param>
+        	    	<param name="grav-passes" type="int" min="1" max="100" _gui-text="Nombres de passes par défaut:">1</param>
+            	<param name="grav-pass-depth" type="float" min="0" max="10" _gui-text="avec pour chaque passes une profondeur de:">0</param>
+            <_param name="grav_infos" type="description" xml:space="preserve"> 
+            En appliquant la couleur ci dessous au chemin, il sera transformer en GCode de gravure.
+            </_param>
+            <param name="grav-color" type="color" _gui-text="Couleur de gravure">0x000000ff</param>
+
+        </page>
+        <page name="Decoupe" _gui-text="Découpe"> 
+            <_param name="grav_infos" type="description" xml:space="preserve">
+            Cette onglet regroupe les paramètres propre a la gravure. seul les chemin visible et dans la calque "Decoupe" seront utiliser pour le gcode lier a la gravure.
+            </_param>
+            <param name="cut-travel-speed" type="int" min="0" max="10000" _gui-text="Vitesse rapide pour la découpe (mm/min or in/min):">3000</param>
+            	<param name="cut-laser-speed" type="int" min="0" max="10000" _gui-text="Vitesse du Laser pour la découpe (mm/min or in/min):">750</param>
+       	    	<param name="cut-laser-power" type="int" min="0" max="20000" _gui-text="Puissance du laser S# (0-255(Marlin) ou 0-10000(GRBL)):">10000</param>
+       	    	<param name="cut-passes" type="int" min="1" max="100" _gui-text="Nombres de passes par défaut:">3</param>
+            	<param name="cut-pass-depth" type="float" min="0" max="10" _gui-text="avec pour chaque passes une profondeur de:">0.5</param>
+            <_param name="cut_infos" type="description" xml:space="preserve"> 
+            En appliquant la couleur ci dessous au chemin, il sera transformer en GCode de découpage.
+            </_param>
+            <param name="cut-color" type="color" _gui-text="Couleur de gravure">0xff0000ff</param>
+
+        </page>
+        <page name="GCode" _gui-text="Gcode">
+            <_param name="cut_infos" type="description" xml:space="preserve"> 
+            GCODE de démarrage du programme, et de fin.
+            </_param>
+           	<param name="Gcode-start" type="string" appearance="multiline"  _gui-text="Gcode de début">G90</param>
+            <param name="Gcode-end" type="string" appearance="multiline"  _gui-text="Gcode de fin">(End GCODE)
+G0 X0 Y0 Z0</param>
+            <_param name="cut_infos" type="description" xml:space="preserve"> 
+            Commande lier fonctionnement du laser
+            </_param>
+            	<param name="laser-on-command" type="string" _gui-text="Laser ON Command:">M4</param>
+            	<param name="laser-off-command" type="string" _gui-text="Laser OFF Command:">M5</param>
+        	    <param name="unit" type="enum" _gui-text="Unitées (mm ou in):">
+                <item value="G21 (All units in mm)">mm</item>
+                <item value="G20 (All units in inches)">in</item>
+            </param>
+            <_param name="gcode_infos1" type="description" xml:space="preserve">le délai rajoute un ligne de type "G4 Px.x" avant l'allumage du laser.</param>
+           	<param name="power-delay" type="float" min="0" max="1000" _gui-text="Délai:(s,ms):">0.0</param>
+        </page>
+        <page name="Fichier" _gui-text="Fichier">
+            	<param name="directory" type="string" _gui-text="Répertoire:"></param>
+            	<param name="filename" type="string" _gui-text="Nom de fichier:">output.gcode</param>
+            	<param name="add-numeric-suffix-to-filename" type="boolean" _gui-text="Ajoute un numéro d'ordre au nom">true</param>
+           <_param name="fichier_infos1" type="description" xml:space="preserve">Par défaut 1 seul fichiers pour toutes les opérations, sinon il peuvent être séparer et porte un extension dédier.</param>
+            <param name="only-one-file" type="boolean" _gui-text="1 seul fichier GCode pour tous">true</param>
+       </page>
+        
+        <page name="Help" _gui-text="Help">
+            <_param name="instructions" type="description" xml:space="preserve">cette extension permet de créer un GCODE a partir des chemins. le gcode est a utiliser de préférence avec bCNC. les calques sont alors repris et peuvent être gérés avec bCNC. les calques invisibles sur inkscape ne sont pas pris en compte. l'ordre des chemins dans le calques est respecter pour la réalisations tout comme l'ordre des calques dans inkscapes. </_param>
+        </page>
+    </param>
+    
+	<effect>
+		<effects-menu>
+			<submenu _name="Generateur Gcode Laser"/>
+		</effects-menu>
+		<object-type>path</object-type>
+  	</effect>
+
+	<script>
+		<command reldir="extensions" interpreter="python">path2laser_gcode.py</command>
+	</script>
+
+</inkscape-extension>
